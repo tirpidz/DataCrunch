@@ -83,21 +83,28 @@ int main( int argc, char *argv[])
         std::vector< QString > xOffset;
         std::vector< QString > yOffset;
         std::vector< QString > label;
+        std::vector< bool > found;
 
         for( QMap< Inscription, QString >::iterator it = sortedEntries.begin(); it != sortedEntries.end(); ++it)
         {
             if( entries.find( it.value()).value().isTraitActive( QString::number( i)))
             {
-                x.push_back( "x" + QString::number( i) + "_" + entries.find( it.value()).value().getName());
-                y.push_back( "y" + QString::number( i) + "_" + entries.find( it.value()).value().getName());
-
-                xOffset.push_back( QString::number( entries.find( it.value()).value().getEnd()));
-                yOffset.push_back( QString::number( ctr));
-                label.push_back( entries.find( it.value()).value().getName());
-
-                std::cout << "x" + QString::number( i).toStdString() + "_" + entries.find( it.value()).value().getName().toStdString() + " = [" << QString::number( entries.find( it.value()).value().getStart()).toStdString() << "," << QString::number( entries.find( it.value()).value().getEnd()).toStdString() << "]\n";
-                std::cout << "y" + QString::number( i).toStdString() + "_" + entries.find( it.value()).value().getName().toStdString() + " = [" << QString::number( ctr).toStdString() << "," << QString::number( ctr).toStdString() << "]\n";
+                found.push_back( true);
             }
+            else
+            {
+                found.push_back( false);
+            }
+
+            x.push_back( "x" + QString::number( i) + "_" + entries.find( it.value()).value().getName());
+            y.push_back( "y" + QString::number( i) + "_" + entries.find( it.value()).value().getName());
+
+            xOffset.push_back( QString::number( entries.find( it.value()).value().getEnd()));
+            yOffset.push_back( QString::number( ctr));
+            label.push_back( entries.find( it.value()).value().getName());
+
+            std::cout << "x" + QString::number( i).toStdString() + "_" + entries.find( it.value()).value().getName().toStdString() + " = [" << QString::number( entries.find( it.value()).value().getStart()).toStdString() << "," << QString::number( entries.find( it.value()).value().getEnd()).toStdString() << "]\n";
+            std::cout << "y" + QString::number( i).toStdString() + "_" + entries.find( it.value()).value().getName().toStdString() + " = [" << QString::number( ctr).toStdString() << "," << QString::number( ctr).toStdString() << "]\n";
 
             ++ctr;
         }
@@ -106,7 +113,14 @@ int main( int argc, char *argv[])
 
         for( unsigned int i = 0; i < x.size(); ++i)
         {
-            std::cout << x[i].toStdString() << "," << y[i].toStdString() << ",\'r\'";
+            if( found[i])
+            {
+                std::cout << x[i].toStdString() << "," << y[i].toStdString() << ",\'r\'";
+            }
+            else
+            {
+                std::cout << x[i].toStdString() << "," << y[i].toStdString() << ",\'k\'";
+            }
 
             if( i == x.size() - 1)
             {
@@ -124,9 +138,18 @@ int main( int argc, char *argv[])
 
         for( unsigned int i = 0; i < x.size(); ++i)
         {
-            std::cout << "text(" << xOffset[i].toStdString() << "," << yOffset[i].toStdString() << ",\'" << label[i].toStdString() << "\',\'color\',\'red\')\n";
+            if( found[i])
+            {
+                std::cout << "text(" << xOffset[i].toStdString() << "," << yOffset[i].toStdString() << ",\'" << label[i].toStdString() << "\',\'color\',\'red\')\n";
+            }
+            else
+            {
+                std::cout << "text(" << xOffset[i].toStdString() << "," << yOffset[i].toStdString() << ",\'" << label[i].toStdString() << "\',\'color\',\'black\')\n";
+            }
         }
     }
+
+    std::cout << "#graph with everything and no red\n";
 
     int ctr = 1;
 
@@ -149,11 +172,6 @@ int main( int argc, char *argv[])
         std::cout << "y_" + entries.find( it.value()).value().getName().toStdString() + " = [" << QString::number( ctr).toStdString() << "," << QString::number( ctr).toStdString() << "]\n";
 
         ++ctr;
-
-        if( ctr == 100)
-        {
-            break;
-        }
     }
 
     std::cout << "plot(";
