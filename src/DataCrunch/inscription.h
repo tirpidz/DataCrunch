@@ -19,7 +19,9 @@ public:
 
     bool isTraitActive( QString trait);
 
-    void display();
+    void display() const;
+
+    bool operator<( const Inscription& other) const;
 
 protected:
     QString name_;

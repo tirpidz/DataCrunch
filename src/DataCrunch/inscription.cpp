@@ -34,14 +34,54 @@ bool Inscription::isTraitActive(QString trait)
     return false;
 }
 
-void Inscription::display()
+void Inscription::display() const
 {
     qDebug() << "Inscription:" << name_ << QString::number( yearStart_) << QString::number( yearEnd_);
     qDebug() << "Traits:";
 
-    for( QSet< QString >::iterator it = activeTraits_.begin(); it != activeTraits_.end(); ++it)
+    for( QSet< QString >::const_iterator it = activeTraits_.begin(); it != activeTraits_.end(); ++it)
     {
         qDebug() << *it;
+    }
+}
+
+bool Inscription::operator<( const Inscription& other) const
+{
+    if( yearStart_ < other.yearStart_)
+    {
+        return true;
+    }
+    else
+    {
+        if( yearStart_ == other.yearStart_)
+        {
+            if( yearEnd_ < other.yearEnd_)
+            {
+                return true;
+            }
+            else
+            {
+                if( yearEnd_ == other.yearEnd_)
+                {
+                    if( name_.compare( other.name_) < 0)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        }
+        else
+        {
+            return false;
+        }
     }
 }
 

@@ -5,6 +5,10 @@
 #include <QStringList>
 #include <QHash>
 #include <QDir>
+#include <QMap>
+
+#include <vector>
+#include <iostream>
 
 #include "inscription.h"
 
@@ -24,6 +28,7 @@ int main( int argc, char *argv[])
     QTextStream in( &file1);
 
     QHash< QString, Inscription > entries;
+    QMap< Inscription, QString > sortedEntries;
 
     while( !in.atEnd())
     {
@@ -32,7 +37,8 @@ int main( int argc, char *argv[])
 
         Inscription entry( inputs.at( 0), inputs.at( 1).toInt(), inputs.at( 2).toInt());
 
-        entries.insert( inputs.at( 0), entry);
+        entries.insert( entry.getName(), entry);
+        sortedEntries.insert( entry, entry.getName());
     }
 
     for( int i = 1; i <= 17; ++i)
@@ -66,9 +72,45 @@ int main( int argc, char *argv[])
         }
     }
 
-    for( QHash< QString, Inscription >::iterator it = entries.begin(); it != entries.end(); ++it)
+    for( int i = 1; i <= 17; ++i)
     {
-        it.value().display();
+
+        std::cout << "#trait " << QString::number( i).toStdString() << std::endl;
+
+        int ctr = 1;
+
+        std::vector< QString > x;
+        std::vector< QString > y;
+
+        for( QMap< Inscription, QString >::iterator it = sortedEntries.begin(); it != sortedEntries.end(); ++it)
+        {
+            if( entries.find( it.value()).value().isTraitActive( QString::number( i)))
+            {
+                x.push_back( "x" + QString::number( i) + "_" + entries.find( it.value()).value().getName());
+                y.push_back( "y" + QString::number( i) + "_" + entries.find( it.value()).value().getName());
+
+                std::cout << "x" + QString::number( i).toStdString() + "_" + entries.find( it.value()).value().getName().toStdString() + " = [" << QString::number( entries.find( it.value()).value().getStart()).toStdString() << "," << QString::number( entries.find( it.value()).value().getEnd()).toStdString() << "]\n";
+                std::cout << "y" + QString::number( i).toStdString() + "_" + entries.find( it.value()).value().getName().toStdString() + " = [" << QString::number( ctr).toStdString() << "," << QString::number( ctr).toStdString() << "]\n";
+            }
+
+            ++ctr;
+        }
+
+        std::cout << "plot(";
+
+        for( unsigned int i = 0; i < x.size(); ++i)
+        {
+            std::cout << x[i].toStdString() << "," << y[i].toStdString();
+
+            if( i == x.size() - 1)
+            {
+                std::cout << ")\n";
+            }
+            else
+            {
+                std::cout << ",";
+            }
+        }
     }
 
     return 0;
