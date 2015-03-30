@@ -74,13 +74,15 @@ int main( int argc, char *argv[])
 
     for( int i = 1; i <= 17; ++i)
     {
-
         std::cout << "#trait " << QString::number( i).toStdString() << std::endl;
 
         int ctr = 1;
 
         std::vector< QString > x;
         std::vector< QString > y;
+        std::vector< QString > xOffset;
+        std::vector< QString > yOffset;
+        std::vector< QString > label;
 
         for( QMap< Inscription, QString >::iterator it = sortedEntries.begin(); it != sortedEntries.end(); ++it)
         {
@@ -88,6 +90,10 @@ int main( int argc, char *argv[])
             {
                 x.push_back( "x" + QString::number( i) + "_" + entries.find( it.value()).value().getName());
                 y.push_back( "y" + QString::number( i) + "_" + entries.find( it.value()).value().getName());
+
+                xOffset.push_back( QString::number( entries.find( it.value()).value().getEnd()));
+                yOffset.push_back( QString::number( ctr));
+                label.push_back( entries.find( it.value()).value().getName());
 
                 std::cout << "x" + QString::number( i).toStdString() + "_" + entries.find( it.value()).value().getName().toStdString() + " = [" << QString::number( entries.find( it.value()).value().getStart()).toStdString() << "," << QString::number( entries.find( it.value()).value().getEnd()).toStdString() << "]\n";
                 std::cout << "y" + QString::number( i).toStdString() + "_" + entries.find( it.value()).value().getName().toStdString() + " = [" << QString::number( ctr).toStdString() << "," << QString::number( ctr).toStdString() << "]\n";
@@ -100,7 +106,7 @@ int main( int argc, char *argv[])
 
         for( unsigned int i = 0; i < x.size(); ++i)
         {
-            std::cout << x[i].toStdString() << "," << y[i].toStdString();
+            std::cout << x[i].toStdString() << "," << y[i].toStdString() << ",\'r\'";
 
             if( i == x.size() - 1)
             {
@@ -111,6 +117,68 @@ int main( int argc, char *argv[])
                 std::cout << ",";
             }
         }
+
+        std::cout << "title( \'blablabla\')\n";
+        std::cout << "xlabel( \'blablabla\')\n";
+        std::cout << "ylabel( \'blablabla\')\n";
+
+        for( unsigned int i = 0; i < x.size(); ++i)
+        {
+            std::cout << "text(" << xOffset[i].toStdString() << "," << yOffset[i].toStdString() << ",\'" << label[i].toStdString() << "\',\'color\',\'red\')\n";
+        }
+    }
+
+    int ctr = 1;
+
+    std::vector< QString > x;
+    std::vector< QString > y;
+    std::vector< QString > xOffset;
+    std::vector< QString > yOffset;
+    std::vector< QString > label;
+
+    for( QMap< Inscription, QString >::iterator it = sortedEntries.begin(); it != sortedEntries.end(); ++it)
+    {
+        x.push_back( "x_" + entries.find( it.value()).value().getName());
+        y.push_back( "y_" + entries.find( it.value()).value().getName());
+
+        xOffset.push_back( QString::number( entries.find( it.value()).value().getEnd()));
+        yOffset.push_back( QString::number( ctr));
+        label.push_back( entries.find( it.value()).value().getName());
+
+        std::cout << "x_" + entries.find( it.value()).value().getName().toStdString() + " = [" << QString::number( entries.find( it.value()).value().getStart()).toStdString() << "," << QString::number( entries.find( it.value()).value().getEnd()).toStdString() << "]\n";
+        std::cout << "y_" + entries.find( it.value()).value().getName().toStdString() + " = [" << QString::number( ctr).toStdString() << "," << QString::number( ctr).toStdString() << "]\n";
+
+        ++ctr;
+
+        if( ctr == 100)
+        {
+            break;
+        }
+    }
+
+    std::cout << "plot(";
+
+    for( unsigned int i = 0; i < x.size(); ++i)
+    {
+        std::cout << x[i].toStdString() << "," << y[i].toStdString() << ",\'k\'";
+
+        if( i == x.size() - 1)
+        {
+            std::cout << ")\n";
+        }
+        else
+        {
+            std::cout << ",";
+        }
+    }
+
+    std::cout << "title( \'blablabla\')\n";
+    std::cout << "xlabel( \'blablabla\')\n";
+    std::cout << "ylabel( \'blablabla\')\n";
+
+    for( unsigned int i = 0; i < x.size(); ++i)
+    {
+        std::cout << "text(" << xOffset[i].toStdString() << "," << yOffset[i].toStdString() << ",\'" << label[i].toStdString() << "\',\'color\',\'black\')\n";
     }
 
     return 0;
