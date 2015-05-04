@@ -27,16 +27,16 @@ Titre: 'Sound changes affecting word-final or word-initial consonants '
 
 Données:
 Omission of h-: 29A, 36, 42, 59, 61, 70, 134, 145, 193, 194
-Fall of -m: 1, 18, 29, 30, 40, 53, 55, 62, 96, 134, 156, 193
-Fall of -t: 135, 154
-Fall of -s: 9, 18, 40
+Loss of -m: 1, 18, 29, 30, 40, 53, 55, 62, 96, 134, 156, 193
+Loss of -t: 135, 154
+Loss of -s: 9, 18, 40
 
 6) Ce graphique nécessite plusieurs couleurs différentes, afin de différencier les catégories de données. Pour les cas où une donnée est présente dans plus d'un groupe, il faudrait une manière de l'indiquer (lignes superposées?)
 
 Données:
 Titre: 'Sound changes affecting word-medial consonants'
 Fall of -n-:  2, 3, 24, 42, 54, 55, 60, 61, 62, 63, 103, 132, 134, 152, 184, 191, 217
-Simplification of clusters: 68, 106, 135
+Simplification of clusters: 68, 106, 132, 135
 Gemminate consonants: 33, 59, 70, 132, 138, 178
 
 7) Ce graphique nécessite deux couleurs différentes, afin de différencier les deux catégories de données.
@@ -144,6 +144,7 @@ Les numéros listés ci-dessus sont ceux des inscriptions. Voici leurs plages de
 126 370 400
 127 590 680
 130 330 400
+132 500 600
 134 670 730
 135 700 730
 137 330 400
