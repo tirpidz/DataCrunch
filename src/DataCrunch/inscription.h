@@ -24,6 +24,8 @@ public:
     bool operator<( const Inscription& other) const;
 
 protected:
+    double getInscriptionCenter() const;
+
     QString name_;
     int yearStart_;
     int yearEnd_;

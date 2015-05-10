@@ -47,34 +47,16 @@ void Inscription::display() const
 
 bool Inscription::operator<( const Inscription& other) const
 {
-    if( (yearStart_ + ((yearStart_ + yearEnd_) / 2)) < (other.yearStart_ + ((other.yearStart_ + other.yearEnd_) / 2)))
+    if( getInscriptionCenter() < other.getInscriptionCenter())
     {
         return true;
     }
-    else
-    {
-        if( (yearStart_ + ((yearStart_ + yearEnd_) / 2)) == (other.yearStart_ + ((other.yearStart_ + other.yearEnd_) / 2)))
-        {
-            if( yearEnd_ < other.yearEnd_)
-            {
-                return true;
-            }
-            else
-            {
-                if( name_.compare( other.name_) < 0)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
-            }
-        }
-        else
-        {
-            return false;
-        }
-    }
+
+    return false;
+}
+
+double Inscription::getInscriptionCenter() const
+{
+    return yearStart_ + ((double)( yearEnd_ - yearStart_) / 2.0);
 }
 
