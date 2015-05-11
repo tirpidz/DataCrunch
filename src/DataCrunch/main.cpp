@@ -38,7 +38,7 @@ int main( int argc, char *argv[])
         Inscription entry( inputs.at( 0), inputs.at( 1).toInt(), inputs.at( 2).toInt());
 
         entries.insert( entry.getName(), entry);
-        sortedEntries.insert( entry, entry.getName());
+        sortedEntries.insertMulti( entry, entry.getName());
     }
 
     for( int i = 1; i <= 17; ++i)
